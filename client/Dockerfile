@@ -1,6 +1,10 @@
 # Multi-stage build for Expo Web app
 FROM node:20-alpine AS builder
 
+# Build-time environment variable forwarded from Railway service envs
+ARG EXPO_PUBLIC_API_URL
+ENV EXPO_PUBLIC_API_URL=${EXPO_PUBLIC_API_URL}
+
 WORKDIR /app
 
 # Copy package files
