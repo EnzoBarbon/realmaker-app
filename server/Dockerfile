@@ -7,9 +7,8 @@ WORKDIR /app
 COPY deno.json deno.lock ./
 COPY prisma ./prisma
 
-# Install Prisma CLI and generate client
-RUN deno install -A npm:prisma@latest && \
-    deno task prisma:generate
+# Generate Prisma client (no need to install CLI globally)
+RUN deno task prisma:generate
 
 # Copy source code
 COPY src ./src
