@@ -1,0 +1,8 @@
+[phases.setup]
+nixPkgs = ['deno']
+
+[phases.build]
+cmds = ['deno task prisma:generate']
+
+[start]
+cmd = 'deno task start'

@@ -3,6 +3,7 @@
 Your Railway dashboard should be open. Follow these steps:
 
 ## ✅ You've Already Done:
+
 - ✓ Railway CLI installed
 - ✓ Logged in to Railway
 - ✓ Project created: `realmaker-app`
@@ -20,6 +21,7 @@ Your Railway dashboard should be open. Follow these steps:
 6. Under **"Source"**, click **"Connect Repo"** (or you can deploy directly from local)
 
 **OR deploy from local CLI:**
+
 ```bash
 cd server
 railway link --service backend
@@ -29,6 +31,7 @@ railway up
 ### Step 2: Wait for Backend to Deploy
 
 The backend will:
+
 - Install Deno
 - Generate Prisma client
 - Start the server
@@ -37,6 +40,7 @@ The backend will:
 ### Step 3: Run Database Migrations
 
 Once backend is deployed:
+
 ```bash
 cd /Users/enzobl/repos/realmaker/realmaker-app/server
 railway run --service backend deno task prisma:push
@@ -58,17 +62,20 @@ railway up
 ### Step 5: Connect Frontend to Backend
 
 1. Get your backend URL:
+
 ```bash
 cd /Users/enzobl/repos/realmaker/realmaker-app/server
 railway domain --service backend
 ```
 
 2. Set it in frontend environment:
+
    - In Railway dashboard, go to **frontend service**
    - Click **"Variables"** tab
    - Add: `EXPO_PUBLIC_API_URL` = `<your-backend-url>`
 
 3. Redeploy frontend:
+
 ```bash
 cd /Users/enzobl/repos/realmaker/realmaker-app/client
 railway up --service frontend
@@ -77,6 +84,7 @@ railway up --service frontend
 ### Step 6: Generate Domains
 
 Get your URLs:
+
 ```bash
 # Backend URL
 cd /Users/enzobl/repos/realmaker/realmaker-app/server
@@ -108,12 +116,14 @@ railway up
 ## 📊 Verify Deployment
 
 Check logs:
+
 ```bash
 railway logs --service backend
 railway logs --service frontend
 ```
 
 Check status:
+
 ```bash
 railway status
 ```
@@ -121,6 +131,7 @@ railway status
 ## 🎉 You're Done!
 
 Your apps will be live at:
+
 - Frontend: `https://frontend-production-xxxx.up.railway.app`
 - Backend: `https://backend-production-xxxx.up.railway.app`
 
