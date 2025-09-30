@@ -1,5 +1,5 @@
 # Deno backend with Prisma
-FROM denoland/deno:alpine-2.1.4
+FROM denoland/deno:alpine-2.5.2
 
 WORKDIR /app
 
