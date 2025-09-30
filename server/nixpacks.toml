@@ -2,7 +2,10 @@
 nixPkgs = ['deno']
 
 [phases.build]
-cmds = ['deno task prisma:generate']
+cmds = [
+  'deno task prisma:generate',
+  'deno cache --reload src/mod.ts'
+]
 
 [start]
 cmd = 'deno task start'

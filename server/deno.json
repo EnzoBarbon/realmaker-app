@@ -25,7 +25,8 @@
     "strict": true
   },
   "imports": {
-    "@prisma/client/runtime/library": "npm:@prisma/client/runtime/library"
+    "@prisma/client/runtime/library": "npm:@prisma/client/runtime/library",
+    "@prisma/client/runtime/index-browser": "npm:@prisma/client/runtime/index-browser"
   },
   "nodeModulesDir": "auto"
 }
