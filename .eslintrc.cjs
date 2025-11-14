@@ -6,7 +6,7 @@ module.exports = {
     jest: true,
   },
   extends: [
-    '@react-native',
+    '@react-native/eslint-config',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     'plugin:import/recommended',

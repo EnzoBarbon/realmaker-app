@@ -1,4 +1,3 @@
-import { AuthUser } from '@/store/auth';
 import * as SecureStore from 'expo-secure-store';
 
 export type HttpClientOptions = {
@@ -35,11 +34,13 @@ export class HttpClient {
   }
 
   getUser() {
-    return this.get<AuthUser>('/auth/get-user');
+    return Promise.resolve({ id: '123', email: 'test@test.com' });
+    // return this.get<AuthUser>('/auth/get-user');
   }
 
-  login(email: string, password: string) {
-    return this.post<{ token: string }>('/auth/login', { email, password });
+  login(_email: string, _password: string) {
+    return Promise.resolve({ token: '123' });
+    // return this.post<{ token: string }>('/auth/login', { email, password });
   }
 }
 
