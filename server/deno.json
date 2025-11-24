@@ -1,13 +1,16 @@
 {
   "tasks": {
-    "dev": "deno run -A --watch src/mod.ts",
-    "start": "deno run -A src/mod.ts",
+    "dev": "deno run -A --env-file=.env.api --watch src/api/main/index.ts",
+    "start": "deno run -A --env-file=.env.api src/api/main/index.ts",
     "fmt": "deno fmt",
     "lint": "deno lint",
-    "prisma:generate": "deno run -A npm:prisma@latest generate",
-    "prisma:push": "deno run -A npm:prisma@latest db push",
-    "prisma:migrate": "deno run -A npm:prisma@latest migrate dev",
-    "prisma:studio": "deno run -A npm:prisma@latest studio"
+    "prisma:generate": "deno run -A --env-file=.env npm:prisma@latest generate",
+    "prisma:push": "deno run -A --env-file=.env npm:prisma@latest db push",
+    "prisma:migrate": "deno run -A --env-file=.env npm:prisma@latest migrate dev",
+    "prisma:studio": "deno run -A --env-file=.env npm:prisma@latest studio",
+    "start:webhook": "deno run -A --env-file=.env.webhook --watch src/messages-pipeline/webhook/index.ts",
+    "start:ai": "deno run -A --env-file=.env.ai-engine --watch src/messages-pipeline/ai-engine/index.ts",
+    "start:sender": "deno run -A --env-file=.env.sender src/messages-pipeline/sender/index.ts"
   },
   "fmt": {
     "useTabs": false,
@@ -25,8 +28,17 @@
     "strict": true
   },
   "imports": {
-    "@prisma/client/runtime/library": "npm:@prisma/client/runtime/library",
-    "@prisma/client/runtime/index-browser": "npm:@prisma/client/runtime/index-browser"
+    "prisma/config": "npm:prisma@7.0.0/config",
+    "lucia": "npm:lucia@2.7.4",
+    "@lucia-auth/adapter-prisma": "npm:@lucia-auth/adapter-prisma@3.0.0",
+    "oslo": "npm:oslo@1.1.1",
+    "dotenv/load": "https://deno.land/std@0.224.0/dotenv/load.ts",
+    "@prisma/adapter-pg": "npm:@prisma/adapter-pg@^7.0.0",
+    "@prisma/client": "npm:@prisma/client@^7.0.0",
+    "@prisma/extension-accelerate": "npm:@prisma/extension-accelerate@^3.0.0",
+    "dotenv-cli": "npm:dotenv-cli@^11.0.0",
+    "kafkajs": "npm:kafkajs@2.2.4",
+    "postgres": "npm:postgres@3.4.4"
   },
   "nodeModulesDir": "auto"
 }

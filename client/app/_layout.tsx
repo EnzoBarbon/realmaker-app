@@ -1,4 +1,5 @@
 import { AuthProvider, useAuth } from '@/store/auth';
+
 import {
   Inter_100Thin,
   Inter_200ExtraLight,
@@ -12,14 +13,15 @@ import {
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Stack, usePathname, router } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+import '@/lib/i18n';
 import '../global.css';
-import LoginScreen from './login';
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -65,11 +67,28 @@ function RootLayoutNav() {
   );
 }
 
-const authRoutes = () => {
+function AuthStack() {
+  const { status } = useAuth();
+  const pathname = usePathname();
+  const loggedIn = status === 'authenticated';
+  const loading = status === 'loading';
+
+  useEffect(() => {
+    if (loading) return;
+    if (status === 'unauthenticated' && pathname !== '/login') {
+      router.replace('/login');
+    }
+    if (status === 'authenticated' && pathname === '/login') {
+      router.replace('/(tabs)/dashboard');
+    }
+  }, [status, pathname, loading]);
+
+  if (loading) return <LoadingScreen />;
   return (
-    <Stack>
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="login" options={{ headerShown: false }} />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      {/* Modal screens */}
+      <Stack.Screen name="onboarding" options={{ headerShown: false }} />
       <Stack.Screen
         name="conversation/[id]"
         options={{
@@ -90,18 +109,6 @@ const authRoutes = () => {
       />
     </Stack>
   );
-};
-
-const nonAuthRoutes = () => {
-  return <LoginScreen></LoginScreen>;
-};
-
-function AuthStack() {
-  const { status } = useAuth();
-  const loggedIn = status === 'authenticated';
-  const loading = status === 'loading';
-  if (loading) return <LoadingScreen />;
-  return loggedIn ? authRoutes() : nonAuthRoutes();
 }
 
 function LoadingScreen() {

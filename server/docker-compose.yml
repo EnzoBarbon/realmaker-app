@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 
 services:
   postgres:
@@ -12,13 +12,17 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
       POSTGRES_DB: ${POSTGRES_DB:-realmaker}
     ports:
-      - '${POSTGRES_PORT:-5432}:5432'
+      - "${POSTGRES_PORT:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       # Mount initialization scripts (optional). Place .sql/.sh files in ./docker/postgres/init
       - ./docker/postgres/init:/docker-entrypoint-initdb.d:ro
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-realmaker}']
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-realmaker}",
+        ]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -33,12 +37,55 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@example.com}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_CONFIG_SERVER_MODE: "False"
     ports:
-      - '${PGADMIN_PORT:-5050}:80'
+      - "${PGADMIN_PORT:-5050}:80"
     volumes:
       - pgadmin_data:/var/lib/pgadmin
+
+  redpanda:
+    image: docker.redpanda.com/redpandadata/redpanda:latest
+    container_name: realmaker-redpanda
+    command:
+      - redpanda
+      - start
+      - --smp 1
+      - --memory 1G
+      - --reserve-memory 0M
+      - --overprovisioned
+      - --node-id 0
+      - --check=false
+      - --kafka-addr PLANTEXT://0.0.0.0:9092,OUTSIDE://0.0.0.0:29092
+      - --advertise-kafka-addr PLANTEXT://redpanda:9092,OUTSIDE://localhost:29092
+      - --pandaproxy-addr 0.0.0.0:8082
+      - --advertise-pandaproxy-addr localhost:8082
+    ports:
+      - 8081:8081
+      - 8082:8082
+      - 29092:29092
+      - 9644:9644
+    volumes:
+      - redpanda_data:/var/lib/redpanda/data
+    healthcheck:
+      test: ["CMD-SHELL", "rpk cluster health | grep -E 'Healthy|OK'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redpanda-console:
+    image: docker.redpanda.com/redpandadata/console:latest
+    container_name: realmaker-redpanda-console
+    depends_on:
+      redpanda:
+        condition: service_started
+    restart: unless-stopped
+    environment:
+      KAFKA_BROKERS: redpanda:9092
+      REDPANDA_ADMIN_API: redpanda:9644
+    ports:
+      - "${REDPANDA_CONSOLE_PORT:-8080}:8080"
 
 volumes:
   postgres_data:
   pgadmin_data:
+  redpanda_data:

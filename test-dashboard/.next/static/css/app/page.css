@@ -1,0 +1,184 @@
+/*!*******************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./src/app/page.module.css ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************/
+.page_container__aoG4z {
+  display: flex;
+  height: 100vh;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.page_sidebar__J6ahr {
+  width: 300px;
+  background-color: var(--white);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.page_sidebarHeader__T4E1D {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+}
+
+.page_newButton__2NSXN {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.page_newButton__2NSXN:hover {
+  background-color: var(--primary-hover);
+}
+
+.page_contactList__c5L34 {
+  flex: 1 1;
+  overflow-y: auto;
+}
+
+.page_contactItem__wkmT4 {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  cursor: pointer;
+}
+
+.page_contactItem__wkmT4:hover {
+  background-color: var(--bg-color);
+}
+
+.page_contactItem__wkmT4.page_active__q3_T3 {
+  background-color: #eff6ff;
+}
+
+.page_contactPhone__YZkBt {
+  font-weight: 500;
+}
+
+.page_contactName__BYsTW {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.page_chatArea__X_m3M {
+  flex: 1 1;
+  background-color: var(--white);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.page_chatHeader__zxE3O {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  font-weight: bold;
+  background-color: #f9fafb;
+}
+
+.page_messages__chTI9 {
+  flex: 1 1;
+  overflow-y: auto;
+  padding: 1rem;
+  background-color: var(--chat-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.page_messageWrapper__3X42t {
+  display: flex;
+}
+
+.page_messageWrapper__3X42t.page_outbound__pClj3 {
+  justify-content: flex-end;
+}
+
+.page_messageWrapper__3X42t.page_inbound__z2XDd {
+  justify-content: flex-start;
+}
+
+.page_message__abnJo {
+  max-width: 70%;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+}
+
+.page_outbound__pClj3 .page_message__abnJo {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+.page_inbound__z2XDd .page_message__abnJo {
+  background-color: var(--white);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+}
+
+.page_timestamp__JCy7J {
+  font-size: 0.65rem;
+  opacity: 0.7;
+  text-align: right;
+  margin-top: 0.25rem;
+}
+
+.page_inputArea__eoM5K {
+  padding: 1rem;
+  border-top: 1px solid var(--border-color);
+  background-color: var(--white);
+}
+
+.page_form__Ou5d6 {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.page_input___cVLA {
+  flex: 1 1;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.25rem;
+}
+
+.page_sendButton__SWOvK {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.page_sendButton__SWOvK:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page_helperText__nBAAm {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.page_emptyState__Zyc7X {
+  flex: 1 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+}
+
+

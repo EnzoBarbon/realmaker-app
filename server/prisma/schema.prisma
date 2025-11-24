@@ -1,16 +1,109 @@
 generator client {
   provider = "prisma-client"
-  output   = "./generated"
+  output = "./generated/"
   runtime  = "deno"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 model Test {
   id        Int      @id @default(autoincrement())
   name      String
   createdAt DateTime @default(now())
+}
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  name      String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  keys      Key[]
+  sessions  Session[]
+  companyId String?
+  company   Company?  @relation(fields: [companyId], references: [id])
+  role      String?   @default("MEMBER")
+}
+
+model Company {
+  id               String         @id @default(cuid())
+  name             String
+  billingContactId String?
+  onboardingData   Json?
+  onboardingCompletedAt DateTime?
+  users            User[]
+  subscriptions    Subscription[]
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+}
+
+model Plan {
+  id            String         @id @default(cuid())
+  name          String         @unique
+  price         Float          @default(0)
+  currency      String         @default("USD")
+  features      Json?
+  subscriptions Subscription[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Subscription {
+  id        String    @id @default(cuid())
+  companyId String
+  company   Company   @relation(fields: [companyId], references: [id])
+  planId    String
+  plan      Plan      @relation(fields: [planId], references: [id])
+  status    String    @default("ACTIVE")
+  startDate DateTime  @default(now())
+  endDate   DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Session {
+  id            String   @id
+  user_id       String
+  user          User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  active_expires BigInt
+  idle_expires   BigInt
+
+  @@index([user_id])
+}
+
+model Key {
+  id             String  @id
+  user_id        String
+  user           User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  hashed_password String?
+
+  @@index([user_id])
+}
+
+model Contact {
+  id            String         @id @default(uuid())
+  phone         String         @unique
+  name          String?
+  createdAt     DateTime       @default(now())
+  conversations Conversation[]
+}
+
+model Conversation {
+  id        String    @id @default(uuid())
+  contactId String
+  contact   Contact   @relation(fields: [contactId], references: [id])
+  messages  Message[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Message {
+  id             String       @id @default(uuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  body           String
+  direction      String // "INBOUND" | "OUTBOUND"
+  createdAt      DateTime     @default(now())
 }
